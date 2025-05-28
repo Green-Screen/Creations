@@ -3,18 +3,18 @@
 What is? - Terminal Service is a remote event wrapper that prioritizes security. "This module does 0 data compression"
 Terminal Service offers many security features such as
 
-	UUID codes generated per event and are different for every player.
-	Hides remote events\functions from client when not in use "Prevents exploiters from listening"
-	Remote function timeouts.
-	Multi Threading.
-	Low impact on performance.
-	Ran Internally based on RunContext.
-	Options for bi-Directional events.
-	Logging for SCM events "Security Code Mismatch" that appear under the game "Custom Events" in the analytics tab
-	Replication is automatic and done on its own
-	Custom Event Types.
-	Allows for multiple listners of a remote event "Not functions"
-	Fully Type annotated with autofill.
+UUID codes generated per event and are different for every player.
+Hides remote events\functions from client when not in use "Prevents exploiters from listening"
+Remote function timeouts.
+Multi Threading.
+Low impact on performance.
+Ran Internally based on RunContext.
+Options for bi-Directional events.
+Logging for SCM events "Security Code Mismatch" that appear under the game "Custom Events" in the analytics tab
+Replication is automatic and done on its own
+Custom Event Types.
+Allows for multiple listners of a remote event "Not functions"
+Fully Type annotated with autofill.
 	
 
  														How to setup?
@@ -22,8 +22,9 @@ Terminal Service offers many security features such as
 TerminalService is a module built for all to begin using it you must create a "Stations" dictionary in a seperate module script and require the main Module "TerminalDirector"
 The module itself must be placed in a service accessable to the server and client. "ReplicatedStorage for best affect"
 
-EX - {{{
+Example,
 
+```lua
 local TerminalService:TerminalService = require(game:GetService("ReplicatedStorage").TerminalDirector)
 
 export type Station = TerminalService.Station
@@ -35,8 +36,7 @@ return {
 	TestEvent = TerminalService.CreateStation("Omni", "Reliable", "Event")
 	
 } -- You can paste this into your "Station" module
-
-}}}
+```
 
 First is the require of the main module TerminalDirector. "You will not need to require any sub modules"
 Next is up to you. The type exports are purely optional and there is you want to add type autofill to your scripts
@@ -207,7 +207,3 @@ Discord - green_screen
 If you enjoy this module and want to see more check out the following game V
 to see all my games or Take the teleporter to the module store where all past, present, and future modules will be published for all.
 
-
-
-													  Creations Hub!!
-							https://www.roblox.com/games/72003501304350/Hub
