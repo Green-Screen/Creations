@@ -13,3 +13,6 @@ Terminal Service offers many security features such as
 - 	Custom Event Types and type check abillity "ClassName".
 - 	Allows for multiple listners of a remote event "Not functions"
 - 	Fully Type annotated with autofill.
+
+
+_This module is still in testing and is not yet ready for production ussage_
