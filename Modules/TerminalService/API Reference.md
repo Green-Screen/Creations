@@ -3,18 +3,18 @@
 What is? - Terminal Service is a remote event wrapper that prioritizes security. "This module does 0 data compression"
 Terminal Service offers many security features such as
 
-UUID codes generated per event and are different for every player.
-Hides remote events\functions from client when not in use "Prevents exploiters from listening"
-Remote function timeouts.
-Multi Threading.
-Low impact on performance.
-Ran Internally based on RunContext.
-Options for bi-Directional events.
-Logging for SCM events "Security Code Mismatch" that appear under the game "Custom Events" in the analytics tab
-Replication is automatic and done on its own
-Custom Event Types.
-Allows for multiple listners of a remote event "Not functions"
-Fully Type annotated with autofill.
+- UUID codes generated per event and are different for every player.
+- Hides remote events\functions from client when not in use "Prevents exploiters from listening"
+- Remote function timeouts.
+- Multi Threading.
+- Low impact on performance.
+- Ran Internally based on RunContext.
+- Options for bi-Directional events.
+- Logging for SCM events "Security Code Mismatch" that appear under the game "Custom Events" in the analytics tab
+- Replication is automatic and done on its own
+- Custom Event Types.
+- Allows for multiple listners of a remote event "Not functions"
+- Fully Type annotated with autofill.
 	
 
  														How to setup?
@@ -41,7 +41,7 @@ return {
 First is the require of the main module TerminalDirector. "You will not need to require any sub modules"
 Next is up to you. The type exports are purely optional and there is you want to add type autofill to your scripts
 
-To use events you will create the index you would want to use, you then set it = to [TerminalService].CreateStation() -> Station
+To use events you will create the index you would want to use, you then set it to ``` [TerminalService].CreateStation() -> Station```
 See below for function descriptions v.
 
 Above is a example on how to set up the module. You will only require the director in this module and to then on use the events you will require this new module script.
@@ -61,6 +61,7 @@ to then turn they events from a station type to either a ClientType or ServerTyp
 If the securityProtocol paramater is true (deafult) then calling activate on a Client script may also return a String as the security Token. This token is needed for all transactions with that event.
 As of now TerminalService will not replicate the code more then once you either must share the code or use multiple events when trying to send packet data.
 BUT, TerminalService does allow you to activate multiple events which will allow multi listeners and will run functions accordingly.
+
 -- Multi function binding --
 
 
@@ -72,8 +73,12 @@ BUT, TerminalService does allow you to activate multiple events which will allow
 
 TerminalDirector: - The main module used to create the basic Station Type
 
+```lua 
 TerminalDirector.CreateStation(Direction: Receiver, Type: Type, IDName:string, SecurityProtocol:boolean?) -> Station
+
 Direction = "Client, Server, Omni"
+Type = "Reliable, UnReliable, Function
+```
 
 The direction Parameter is based on where the packet data IS GOING while Omni means Bi-Directional communications
 The Type Parameter is based on the type of RemoteEvent to use Reliable - Normal, Unreliable - Unreliable, Function - Function
@@ -83,7 +88,7 @@ This function will retrun a "Station" type which to activate you must call Activ
 
 
 
-Station: - The basic type created from TerminalDirector.CreateStation()
+Station: - The basic type created from ```TerminalDirector.CreateStation()```
 
 Properties-
 --Direction - The direction of data transfer See above for more info ^
@@ -100,7 +105,7 @@ If SecurityProtocol is true then when THE FIRST activate call that has a directi
 If the event has already been activated and another activate call is created in a seperate script a warning will be pushed and the Security Token will be Nil
 
 DO NOT RECOMEND
-Do not recomend storeing Tokens in a table nor module script.
+storeing Tokens in a table nor module script.
 Leaving the tokens as single use varibles are the most secure and never Printing/Sharing them in code.
 
 
