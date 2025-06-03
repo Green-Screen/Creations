@@ -17,6 +17,7 @@ Terminal Service offers many security features such as
 - Fully Type annotated with autofill.
 - Built in rate limiter.
 - Built in security against exploitation manipulation
+
 	
 
  														How to setup?
@@ -206,6 +207,51 @@ This will force the function to finish but may return wrongful data. This in tur
 Remote functions do not allow for multi function binding. If this occurs the previously binded will be overwritten and a warning will be pushed
 
 
+														Settings Module!
+
+The settings module is a child of ``TerminalDirector`` This module controls global settings for the module determining response actions and what security system to be activated.
+``` lua
+	local Settings = {}
+
+-- Path for Stations Table
+Settings.StationsDirectory = game:GetService("ReplicatedStorage").Stations :: ModuleScript
+
+-- RemoteFunction Time out time
+Settings.TimeOut = 10 :: number
+
+-- Determins if a remote function callback can yield. If this is left false and a function yields then the function will return a the value or nil depending on the yielding element
+Settings.CanRemoteFunctionsYield = true :: boolean
+
+-- Should the player be kicked if a code is mismatched
+Settings.KickOnMisMatch = true :: boolean
+
+-- Should Anaylitics service be used as a logger
+Settings.UseLogger = true :: boolean
+
+-- Should the rate Limiter Be enabled. Rates are determined based on the data entered when creating the events in the "Stations Directory"
+Settings.UseRateLimiter = true :: boolean
+
+-- Periodically Ping the client and if the response ping is higher then the allowed ping the player will be disconnected for "Unstable connection"
+Settings.PassiveNetworkChecks = true :: boolean
+
+-- Maximum amount of time in milliseconds the client has to respond to the servers Passive pings, "Only enabled if PassiveNetworkChecks is true"
+Settings.PassiveMaximumPing = 300 :: number
+
+if game["Run Service"]:IsServer() then
+	print("[TerminalService]: Active settings:", Settings)
+	script.Name = "Settings"
+end
+return Settings :: typeof(Settings)
+
+```
+Most values can be left as how they are **EXCEPT** the stations directory. the module must be accessible to both client and server
+
+	      													Extra Functions!
+TerminalService has many built in features most are controlled from the settings module below **V** some of the features include
+- Custom Event logger using analytics service
+- Internal event security controller prevents any exploiters from parenting events without it being properly scheduled through the function
+- Rate limiter based on amount of Requests (Only for Client->Server communications) PER MINUTE
+- Passive Ping enforcer where periodically it will ping clients and will kick players if they dont respond in the time allowed
 
 
  														Final Notes!
@@ -216,3 +262,66 @@ Discord - green_screen
 If you enjoy this module and want to see more check out the following game V
 to see all my games or Take the teleporter to the module store where all past, present, and future modules will be published for all.
 
+														Examples!
+
+![Screenshot 2025-06-03 003841](https://github.com/user-attachments/assets/29f8d5b1-9338-46a9-9b96-78b337c59354)
+**The proper requiring path shown**
+
+
+![Screenshot 2025-06-03 003952](https://github.com/user-attachments/assets/1622271a-bed8-41d1-9940-031105118da6)
+**Example of setups inside of each script**
+
+```lua
+local TerminalService:TerminalService = require(game:GetService("ReplicatedStorage").TerminalDirector)
+-- Only time you will require the module
+
+export type Station = TerminalService.Station
+export type ServerEvent = TerminalService.ServerEvent
+export type ClientEvent = TerminalService.ClientEvent
+-- Allows for manuel type annotation
+
+return {
+	
+	Exponential = TerminalService.CreateStation("Server", "Function", "Exponential_Calculator", true, 230)
+	-- Each index in the dictionary is a Seperate Remote event/function
+	
+}
+```
+**Example of stations dictionary **
+
+```lua
+local Stations = require(game:GetService("ReplicatedStorage").Stations) -- Path to stations Directionary
+
+local Exponiental:Stations.ServerEvent, Token:string? = Stations.Exponential:Register() 
+-- Register method will register internally and attach the metaTable. Since this is a local script the security token is delivered as a tuple
+-- Must Manuelly Type annotate to get autoFill. Event type is BASED ON RUNCONTEXT NOT DIRECTION
+
+for i = 1, 5000 do
+	print(Exponiental:DispatchToHub(Token, i))
+	task.wait(0.2)
+end
+
+```
+**Example of Client script in a Client->Server->Client remote function call doing a simple math function**
+
+```lua
+local Stations = require(game:GetService("ReplicatedStorage").Stations) -- Path to stations Directionary
+
+local Exponiental:Stations.ServerEvent = Stations.Exponential:Register() 
+-- Register method will register internally and attach the metaTable
+-- Must Manuelly Type annotate to get autoFill. Event type is BASED ON RUNCONTEXT NOT DIRECTION
+
+Exponiental:Connect(function(Player: Player, Number:number) 
+	return math.pow(Number,3) 
+end)
+
+```
+**Example of Server script in a Client->Server->Client remote function call doing a simple math function**
+
+A test game you can use as a way to test and understand how this module works. While it can show off all its internal functions. _--Game download will be here once the module is completed and gone through testing.--_
+- UUID security Tokens
+- Custom Event logger
+- Internal event security controller
+- Remote function Timeout handler / force yield
+- Rate limiter demonstration
+- **And ofc the simplicity and great performance for your game**
