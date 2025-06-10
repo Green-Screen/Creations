@@ -8,11 +8,13 @@ Terminal Service offers many security features such as
 - 	Low impact on performance.
 - 	Ran Internally based on RunContext.
 - 	Options for bi-Directional events.
-- 	Logging for SCM events "Security Code Mismatch" that appear under the game "Custom Events" in the analytics tab
+- 	Logging for error codes using Analytics Service
 - 	Replication is automatic and done on its own
 - 	Custom Event Types and type check abillity "ClassName".
 - 	Allows for multiple listners of a remote event "Not functions"
 - 	Fully Type annotated with autofill.
+- 	Built in security functions to prevent exploiters from manipulating.
+- 	Maintains the same functionallity of remote events/function + MORE!!
 
 
 **_This module is still in testing and is not yet ready for production usage_**
